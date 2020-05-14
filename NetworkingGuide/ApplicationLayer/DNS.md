@@ -370,7 +370,7 @@ static const char * const rcodetext[] = {
 
 * `NXDOMAIN`，只有当该结果是从权威NS服务器返回时，才表明该域名确实是不存在的。
 
-* `NOERROR`，
+* `NOERROR`
 * `NODATA`，`dig` 特有的，表示 `NOERROR` 并且 `ANSWER` 为 0，真实含义是该域名有多种记录，但没有一个记录符合所请求的记录。
     > So what does NOERROR with an ANSWER of 0 actually represent? It means one or more resource records exist for this domain but there isn’t a record matching the resource record type (A, AAAA, MX, etc.).
 
