@@ -2,7 +2,7 @@
 
 ## 概览：tcpdump参数和表达式
 
-tcpdump是一款强大的基于命令行的网络流量包分析工具。
+tcpdump 是一款强大的基于命令行的网络流量包分析工具。
 
 如果对于TCP/IP协议没有基本的了解，tcpdump的输出看起来就像是梵文一般深奥难懂。
 
@@ -39,14 +39,7 @@ tcpdump默认只会打印出每个包的部分信息：源地址、源端口、�
 
 ```
 tcpdump -i any icmp
-# TODO snapshot
 ```
-
-如何获取系统所有的网卡？有很多种方法：
-
-* tcpdump -D
-* ifconfig -s
-* netstat -i
 
 捕捉一个完整的ping交互：
 
@@ -185,3 +178,15 @@ https://community.emc.com/community/support/chinese/teamblog/blog/2016/04/26/大
 
 * TCPDUMP(8)
 * PCAP-FILTER(7)
+
+----
+
+# Q&A
+
+Q1: 如何获取系统所有的网卡？
+
+* `tcpdump -D`
+* `ifconfig -s`
+* `netstat -i`
+
+----
