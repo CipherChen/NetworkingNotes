@@ -308,6 +308,74 @@ Q2: dns client 对于多个 nameserver 的行为
 
 Q1: Difference between NXDOMAIN and 'no answer' ?
 
-TODO
+从 RFC1035 可以查到，RCODE 当时定义了六个值：
+```
+RCODE           Response code - this 4 bit field is set as part of
+                responses.  The values have the following
+                interpretation:
+
+                0               No error condition
+
+                1               Format error - The name server was
+                                unable to interpret the query.
+
+                2               Server failure - The name server was
+                                unable to process this query due to a
+                                problem with the name server.
+
+                3               Name Error - Meaningful only for
+                                responses from an authoritative name
+                                server, this code signifies that the
+                                domain name referenced in the query does
+                                not exist.
+
+                4               Not Implemented - The name server does
+                                not support the requested kind of query.
+
+                5               Refused - The name server refuses to
+                                perform the specified operation for
+                                policy reasons.  For example, a name
+                                server may not wish to provide the
+                                information to the particular requester,
+                                or a name server may not wish to perform
+                                a particular operation (e.g., zone
+                                transfer) for particular data.
+
+                6-15            Reserved for future use.
+```
+
+从 `dig` 的源码来看，`dig` 对于 rcode 的定义更丰富些。
+```
+/*% return code text */
+static const char * const rcodetext[] = {
+	"NOERROR",
+	"FORMERR",
+	"SERVFAIL",
+	"NXDOMAIN",
+	"NOTIMP",
+	"REFUSED",
+	"YXDOMAIN",
+	"YXRRSET",
+	"NXRRSET",
+	"NOTAUTH",
+	"NOTZONE",
+	"RESERVED11",
+	"RESERVED12",
+	"RESERVED13",
+	"RESERVED14",
+	"RESERVED15",
+	"BADVERS"
+};
+```
+
+* `NXDOMAIN`，只有当该结果是从权威NS服务器返回时，才表明该域名确实是不存在的。
+
+* `NOERROR`，
+* `NODATA`，`dig` 特有的，表示 `NOERROR` 并且 `ANSWER` 为 0，真实含义是该域名有多种记录，但没有一个记录符合所请求的记录。
+    > So what does NOERROR with an ANSWER of 0 actually represent? It means one or more resource records exist for this domain but there isn’t a record matching the resource record type (A, AAAA, MX, etc.).
+
+* [dig.c](http://ftp.isc.org/isc/bind9/9.9.0rc1/bind-9.9.0rc1/bin/dig/dig.c)
+* [RFC1035](https://tools.ietf.org/html/rfc1035)
+* [The subtleties between the NXDOMAIN, NOERROR and NODATA DNS response codes](https://prefetch.net/blog/2016/09/28/the-subtleties-between-the-nxdomain-noerror-and-nodata-dns-response-codes/)
 
 --------------------------------------------------------------------------------
