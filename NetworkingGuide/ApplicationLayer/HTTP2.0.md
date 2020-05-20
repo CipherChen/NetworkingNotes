@@ -35,7 +35,9 @@ HTTP2 适用于 WEB（如浏览器等）需要加载多个、多种资源后再�
 ### 结论
 
 HTTP2 不是银弹，不要简单的认为打开了 HTTP2，网站速度就一定会得到优化。
+
 从 [HTTP/2 Theory and Practice in NGINX Stable, Part 2] 和我本人使用 `h2load` 的测试结果来看，有几个结论：
+
 1. 在测试 nginx 静态文件的场景下，http2 并没有加快网页的访问，甚至比 http1 还慢一些（都是 SSL）
 2. SSL HTTP2 由于有 SSL，多引入了一层负载，所以性能相对也会更低一些
 3. HTTP2 的头部压缩可以有效降低 header 的请求量（`space savings 39.58%`），HTTP1 这部分是 0%。
@@ -55,8 +57,8 @@ HTTP2 不是银弹，不要简单的认为打开了 HTTP2，网站速度就一�
 ### Q&A
 
 Q3: `h2load` 测试并发，报错 `Process Request Failure`
+A3: 是 nginx 上对于 http2 的并发限制 `http2_max_requests`，表示 http2 的单个连接会处理多少请求，默认是 1000。
 
-是 nginx 上对于 http2 的并发限制 `http2_max_requests`，表示 http2 的单个连接会处理多少请求，默认是 1000。
 实际超过该阈值时，现有连接会被 nginx 主动中断，客户端需要新建连接。
 周期性关闭连接可以确保内存及时回收，因此该配置并不是越大越好。
 
@@ -66,6 +68,7 @@ Q3: `h2load` 测试并发，报错 `Process Request Failure`
 Q2: 对于普通的高并发场景（单 client，`Connection: close` or `Connection: keep-alive`），是否有显著优化？
 
 Q1: 复用连接的话，是否意味着多个请求可以复用源端口，从而减少连接数？
+A1: 是的，（浏览器）可以用更少的连接，（并发）请求更多的资源。
 
 ### 参考
 
