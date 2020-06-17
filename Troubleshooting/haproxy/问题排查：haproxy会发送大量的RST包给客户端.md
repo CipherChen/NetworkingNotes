@@ -22,7 +22,7 @@
 
 发现连接其实是能够正常关闭的。
 
-分析到这，不得其解，转而去分析 RST flag 的特点。
+分析到这，不得其解，转而去分析 RST flag 的原因。
 
 #### FIN VS. RST
 
@@ -37,8 +37,9 @@
 
 > One reason a device will send a RST is in response to receiving a packet for a closed socket.
 
-分析得知，RST 包发送的原因，很可能是因为这个 socket 已经关闭了。于是转而去看图二的异常流，
-发现了端倪：四次挥手过程中，第二个包（ACK）距第三个包（FIN）的时间很长，接近五分钟。
+由此得知，RST 包发送的原因，很可能是因为这个 socket 已经关闭了。
+
+于是转而去看图二的异常流，发现了端倪：四次挥手过程中，第二个包（ACK）距第三个包（FIN）的时间很长，接近五分钟。
 
 第二个包和第三个包之间的状态是`FIN_WAIT_2`，该状态的超时设置是 120s。
 
