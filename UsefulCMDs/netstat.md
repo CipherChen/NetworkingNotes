@@ -54,7 +54,7 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 
 ###
 
-|No.|Direction|Src|Dst|Length|TCP Segment Len|Flags|Seq(absolutely,relative)|Ack|Msg|
+|No.|Direction|Src|Dst|Length|TCP Segment Len|Flags|Seq(absolutely,relatively)|Ack|Msg|
 |--|--|--|--|--|--|--|--|--|
 |1|->|client|server|66|0|SYN|3927753347(0)||客户端主动建立连接|
 |2|<-|server|client|62|0|SYN,ACK|1794486207(0)|3927753348(0)|服务端响应握手连接|
